@@ -44,7 +44,6 @@ public class login extends javax.swing.JFrame {
 
         txtemail = new javax.swing.JTextField();
         txtpasword = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
         signup = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -59,23 +58,6 @@ public class login extends javax.swing.JFrame {
         });
         getContentPane().add(txtemail, new org.netbeans.lib.awtextra.AbsoluteConstraints(1350, 490, 360, 40));
         getContentPane().add(txtpasword, new org.netbeans.lib.awtextra.AbsoluteConstraints(1350, 610, 360, 40));
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Vector (9).png"))); // NOI18N
-        jLabel2.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jLabel2AncestorAdded(evt);
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
-        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel2MouseClicked(evt);
-            }
-        });
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1430, 690, -1, -1));
 
         signup.setForeground(new java.awt.Color(0, 0, 204));
         signup.setText("Sign Up");
@@ -100,9 +82,18 @@ public class login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-String email = txtemail.getText();
-        String pasword = txtpasword.getText();
+    private void signupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signupMouseClicked
+new SignIn().show();
+        dispose();        
+    }//GEN-LAST:event_signupMouseClicked
+
+    private void txtemailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtemailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtemailActionPerformed
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+     String email = txtemail.getText();
+     String pasword = txtpasword.getText();
         
         
 
@@ -116,36 +107,22 @@ String email = txtemail.getText();
             pst.setString(1, email);
             pst.setString(2, pasword);
            
-            // Execute
+            // Execute  
+            rs=pst.executeQuery();
             
-            pst.executeQuery();
-          
-        new dashboard().show();
-        dispose();
-                   
+               
+          if(rs.next()) {
+                JOptionPane.showMessageDialog(null, "berhasil login");
+                new dashboard().show();
+                dispose(); 
+            } else {
+                JOptionPane.showMessageDialog(null, "akun anda tidak tersedia, klik sign up " );
+          }
            
-           
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Gagal login : " + e.getMessage());
         
-        }
-    }//GEN-LAST:event_jLabel2MouseClicked
-
-    private void jLabel2AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jLabel2AncestorAdded
-      
-    }//GEN-LAST:event_jLabel2AncestorAdded
-
-    private void signupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signupMouseClicked
-new SignIn().show();
-        dispose();        
-    }//GEN-LAST:event_signupMouseClicked
-
-    private void txtemailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtemailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtemailActionPerformed
-
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        // TODO add your handling code here:
+        } catch (SQLException e) {
+          } 
+        
     }//GEN-LAST:event_jLabel1MouseClicked
 
     /**
@@ -186,7 +163,6 @@ new SignIn().show();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel signup;
     private javax.swing.JTextField txtemail;

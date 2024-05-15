@@ -1,4 +1,12 @@
 package project;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import konek.koneksi;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -15,8 +23,41 @@ public class dashboard extends javax.swing.JFrame {
      */
     public dashboard() {
         initComponents();
+        datatable();
+        datatable1();
+        datatable2();
     }
+private void datatable() {
+        DefaultTableModel tbl = new DefaultTableModel();
+        tbl.addColumn("kode buku");
+        tbl.addColumn("judul buku");
+        tbl.addColumn("pengarang");
+        tbl.addColumn("penerbit");
+        tbl.addColumn("tahun terbit");
+        tbl.addColumn("kategori");
+        tbl.addColumn("jumlah");
+        table.setModel(tbl);
+        try{
+            Statement statement = (Statement)koneksi.GetConnection().createStatement();
+            ResultSet res = statement.executeQuery("SELECT * FROM data_buku");
 
+            while (res.next())
+            {
+                tbl.addRow(new Object[]{
+                    res.getString("kode_buku"),
+                    res.getString("judul_buku"),
+                    res.getString("pengarang"),
+                    res.getString("penerbit"),
+                    res.getString("tahun_terbit"),
+                    res.getString("kategori"),
+                    res.getString("jumlah")
+                });
+                table.setModel(tbl);
+            }
+        }catch (SQLException e){
+                    JOptionPane.showMessageDialog(rootPane, "salah"+e.getMessage() );
+     }     
+        }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,11 +68,11 @@ public class dashboard extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        table = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        table2 = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        table3 = new javax.swing.JTable();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -41,7 +82,7 @@ public class dashboard extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -52,11 +93,11 @@ public class dashboard extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(table);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(252, 237, 990, 280));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 250, 990, 290));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        table2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -67,11 +108,11 @@ public class dashboard extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(table2);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 570, 990, 460));
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 580, 990, 460));
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        table3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -82,20 +123,35 @@ public class dashboard extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane3.setViewportView(jTable3);
+        jScrollPane3.setViewportView(table3);
 
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1260, 240, 620, 790));
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1260, 250, 620, 790));
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnpinjaman.png"))); // NOI18N
+        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel11MouseClicked(evt);
+            }
+        });
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, -1, -1));
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnusername.png"))); // NOI18N
         getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, -1, -1));
 
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnabsensi.png"))); // NOI18N
+        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel13MouseClicked(evt);
+            }
+        });
         getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, -1, -1));
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btndatabuku.png"))); // NOI18N
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel9MouseClicked(evt);
+            }
+        });
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 200, 60));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Dashboard.png"))); // NOI18N
@@ -103,6 +159,21 @@ public class dashboard extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
+new DataBuku().show();
+                dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel9MouseClicked
+
+    private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
+new pinjaman().show();
+                dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel11MouseClicked
+
+    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
+new Absen().show();
+                dispose();         // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel13MouseClicked
 
     /**
      * @param args the command line arguments
@@ -148,8 +219,65 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
+    private javax.swing.JTable table;
+    private javax.swing.JTable table2;
+    private javax.swing.JTable table3;
     // End of variables declaration//GEN-END:variables
+ private void datatable1() {
+        DefaultTableModel tbl = new DefaultTableModel();
+        tbl.addColumn("id pinjaman");
+        tbl.addColumn("kode buku");
+        tbl.addColumn("tanggal");
+        tbl.addColumn("nis");
+        tbl.addColumn("nama");
+        tbl.addColumn("kelas");
+        table2.setModel(tbl);
+        try{
+            Statement statement = (Statement)koneksi.GetConnection().createStatement();
+            ResultSet res = statement.executeQuery("SELECT * FROM pinjaman");
+
+            while (res.next())
+            {
+                tbl.addRow(new Object[]{
+                    res.getString("id_pinjaman"),
+                    res.getString("kode_buku"),
+                    res.getString("tanggal"),
+                    res.getString("nis"),
+                    res.getString("nama"),
+                    res.getString("kelas"),
+                    
+                });
+                table2.setModel(tbl);
+            }
+        }catch (SQLException e){
+                    JOptionPane.showMessageDialog(rootPane, "salah"+e.getMessage() );
+     }  
+    }
+   public void datatable2(){
+        DefaultTableModel tbl = new DefaultTableModel();
+        tbl.addColumn("NO ABSEN");
+        tbl.addColumn("NIS");
+        tbl.addColumn("NAMA");
+        tbl.addColumn("KELAS");
+        tbl.addColumn("TANGGAL");
+        table3.setModel(tbl);
+        try{
+            Statement statement = (Statement)koneksi.GetConnection().createStatement();
+            ResultSet res = statement.executeQuery("SELECT * FROM absensi_siswa");
+            
+            while (res.next())
+            {
+                tbl.addRow(new Object[]{
+                    res.getString("no_absen"),
+                    res.getString("nis"),
+                    res.getString("nama_siswa"),
+                    res.getString("kelas"),
+                    res.getString("tanggal"),
+                });
+                table3.setModel(tbl);
+            }
+        }catch (SQLException e){
+                    JOptionPane.showMessageDialog(rootPane, "salah"+e.getMessage() );
+                    }
+    }
 }

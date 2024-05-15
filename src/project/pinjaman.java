@@ -10,8 +10,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import static project.DataBuku.cn;
 import static project.login.cn;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 /**
  *
  * @author ASUS
@@ -23,10 +28,12 @@ public class pinjaman extends javax.swing.JFrame {
      */
     public pinjaman() {
         initComponents();
-         table.setBackground(new Color(0,0,0,0));
-         table.setBorder(null);
+        datatable();
+         
     }
-
+ public static Connection cn;
+    public static ResultSet rs;
+    public static Statement st;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,24 +43,52 @@ public class pinjaman extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        table = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        txtidpinjaman = new javax.swing.JTextField();
+        txtkodebuku = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        table1 = new javax.swing.JTable();
+        table = new javax.swing.JTable();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        txtnis = new javax.swing.JTextField();
+        txtkelas = new javax.swing.JTextField();
+        txtnamapeminjam = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jdate = new com.toedter.calendar.JDateChooser();
         jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtidpinjaman.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtidpinjamanActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txtidpinjaman, new org.netbeans.lib.awtextra.AbsoluteConstraints(1511, 610, 220, -1));
+        getContentPane().add(txtkodebuku, new org.netbeans.lib.awtextra.AbsoluteConstraints(1511, 640, 220, -1));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setText("KODE BUKU");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1340, 640, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel3.setText("ID PINJAMAN");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1340, 610, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setText("TANGGAL");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1340, 670, -1, -1));
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -63,70 +98,281 @@ public class pinjaman extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "ID PINJAMAN", "KODE BUKU", "TAGGAL", "NIS", "NAMA", "KELAS"
+                "ID PINJAMAN", "KODE BUKU", "TANGGAL", "NIS", "NAMA", "KELAS"
             }
         ));
-        jScrollPane1.setViewportView(table);
-
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 670, 950, 370));
-
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
             }
         });
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1511, 610, 220, -1));
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1511, 670, 220, -1));
-        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1511, 640, 220, -1));
+        jScrollPane2.setViewportView(table);
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setText("NAMA");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1340, 640, -1, -1));
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setText("NOMOR INDUK");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1340, 610, -1, -1));
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel4.setText("KELAS");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1340, 670, -1, -1));
-
-        table1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "ID PINJAMAN", "KODE BUKU", "TAGGAL", "NIS", "NAMA", "KELAS"
-            }
-        ));
-        jScrollPane2.setViewportView(table1);
-
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 290, 950, 340));
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, 950, 790));
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnpinjaman.png"))); // NOI18N
+        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel11MouseClicked(evt);
+            }
+        });
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, -1, -1));
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnusername.png"))); // NOI18N
         getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, -1, -1));
 
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnabsensi.png"))); // NOI18N
+        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel13MouseClicked(evt);
+            }
+        });
         getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, -1, -1));
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btndatabuku.png"))); // NOI18N
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel9MouseClicked(evt);
+            }
+        });
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 200, 60));
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btntambahpnjm.png"))); // NOI18N
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1650, 550, -1, -1));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btneditpnjm.png"))); // NOI18N
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1710, 550, -1, 30));
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnhapuspnjm.png"))); // NOI18N
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1680, 550, -1, -1));
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnrefresh.png"))); // NOI18N
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel7MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 150, -1, -1));
+
+        txtnis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtnisActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txtnis, new org.netbeans.lib.awtextra.AbsoluteConstraints(1510, 700, 220, -1));
+        getContentPane().add(txtkelas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1510, 760, 220, -1));
+        getContentPane().add(txtnamapeminjam, new org.netbeans.lib.awtextra.AbsoluteConstraints(1510, 730, 220, -1));
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel8.setText("NAMA PEMINJAM");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(1340, 730, -1, -1));
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel14.setText("NIS");
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(1340, 700, -1, -1));
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel15.setText("KELAS");
+        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(1340, 760, -1, -1));
+        getContentPane().add(jdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(1510, 670, 220, -1));
+
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Pinjaman.png"))); // NOI18N
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtidpinjamanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtidpinjamanActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtidpinjamanActionPerformed
+
+    private void txtnisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnisActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtnisActionPerformed
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+        String idpinjaman = txtidpinjaman.getText();
+        String kodebuku = txtkodebuku.getText();
+        String tanggal = date.format(jdate.getDate());
+        String nis = txtnis.getText();
+        String nama = txtnamapeminjam.getText();
+        String kelas = txtkelas.getText();
+       
+
+        try {
+            // Connect
+            String sql = "INSERT INTO `pinjaman`(id_pinjaman,kode_buku, tanggal, nis, nama, kelas) VALUES (?, ?, ?, ?, ?, ?)";
+            cn = koneksi.GetConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+
+            // Set paramater
+            pst.setString(1, idpinjaman);
+            pst.setString(2, kodebuku);
+            pst.setString(3, tanggal);
+            pst.setString(4, nis);
+            pst.setString(5, nama);
+            pst.setString(6, kelas);
+            
+
+            // Execute
+            pst.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Data tersimpan");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Gagal menyimpan data: " + e.getMessage());
+        }
+        // Update table
+        datatable();
+       
+txtidpinjaman.setText("");
+txtkodebuku.setText("");
+jdate.setDateFormatString("");
+txtnis.setText("");
+txtnamapeminjam.setText("");
+txtkelas.setText("");
+       
+       
+       
+       
+    }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+       int row = table.getSelectedRow();
+
+        if (row < 0) {
+            // Error if row not selected
+            JOptionPane.showMessageDialog(null, "Pilih data yang akan dihapus");
+            return;
+        }
+
+        // get value from first row
+        String databuku = table.getValueAt(row, 0).toString();
+        try {
+            String sql = "DELETE FROM  pinjaman WHERE id_pinjaman = ?";
+            cn = koneksi.GetConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst = cn.prepareStatement(sql);
+            pst.setString(1, databuku);
+            pst.execute();
+
+            JOptionPane.showMessageDialog(null, "Berhasil");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Gagal menghapus" + e.getMessage());
+        } 
+        datatable();  
+        txtidpinjaman.setText("");
+txtkodebuku.setText("");
+jdate.setDateFormatString("");
+txtnis.setText("");
+txtnamapeminjam.setText("");
+txtkelas.setText("");
+    }//GEN-LAST:event_jLabel6MouseClicked
+
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+       SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+        String idpinjaman = txtidpinjaman.getText();
+        String kodebuku = txtkodebuku.getText();
+        String tanggal = date.format(jdate.getDate());
+        String nis = txtnis.getText();
+        String nama = txtnamapeminjam.getText();
+        String kelas = txtkelas.getText();
+       
+        try {
+            // Connect
+            String sql =( "UPDATE data_buku SET judul_buku= ?,pengarang=?,penerbit= ?,tahun_terbit= ?,kategori= ?,jumlah= ? WHERE kode_buku=?");
+            cn = koneksi.GetConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+
+            // Set paramater
+            pst.setString(1, idpinjaman);
+            pst.setString(2, kodebuku);
+            pst.setString(3, tanggal);
+            pst.setString(4, nis);
+            pst.setString(5, nama);
+            pst.setString(6, kelas);
+
+            // Execute
+            pst.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Data berhasil diedit");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Gagal menyimpan data: " + e.getMessage());
+        }
+        // Update table
+        datatable();         
+txtidpinjaman.setText("");
+txtkodebuku.setText("");
+jdate.setDateFormatString("");
+txtnis.setText("");
+txtnamapeminjam.setText("");
+txtkelas.setText("");// TODO add your handling code here:
+    }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+               SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+int bar = table.getSelectedRow();
+String a = table.getValueAt(bar, 0).toString();
+String b = table.getValueAt(bar, 1).toString();
+String c = table.getValueAt(bar, 2).toString();
+String d = table.getValueAt(bar, 3).toString();
+String e = table.getValueAt(bar, 4).toString();
+String f = table.getValueAt(bar, 5).toString();
+
+
+Date date;
+try {
+    date = dateFormat.parse(c);
+} catch (ParseException ex) {
+    // Handle parsing exception
+    ex.printStackTrace();
+    return;
+}
+
+txtidpinjaman.setText(a);
+txtkodebuku.setText(b);
+jdate.setDate(date); 
+txtnis.setText(d);
+txtnamapeminjam.setText(e);
+txtkelas.setText(f);
+        
+               // TODO add your handling code here:
+    }//GEN-LAST:event_tableMouseClicked
+
+    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
+new DataBuku().show();
+                dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel9MouseClicked
+
+    private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
+new pinjaman().show();
+                dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel11MouseClicked
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+new pengembalian().show();
+                dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel7MouseClicked
+
+    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
+new Absen().show();
+                dispose();         // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel13MouseClicked
 
     /**
      * @param args the command line arguments
@@ -164,20 +410,65 @@ public class pinjaman extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private com.toedter.calendar.JDateChooser jdate;
     private javax.swing.JTable table;
-    private javax.swing.JTable table1;
+    private javax.swing.JTextField txtidpinjaman;
+    private javax.swing.JTextField txtkelas;
+    private javax.swing.JTextField txtkodebuku;
+    private javax.swing.JTextField txtnamapeminjam;
+    private javax.swing.JTextField txtnis;
     // End of variables declaration//GEN-END:variables
+
+    private void datatable() {
+        DefaultTableModel tbl = new DefaultTableModel();
+        tbl.addColumn("id pinjaman");
+        tbl.addColumn("kode buku");
+        tbl.addColumn("tanggal");
+        tbl.addColumn("nis");
+        tbl.addColumn("nama");
+        tbl.addColumn("kelas");
+        table.setModel(tbl);
+        try{
+            Statement statement = (Statement)koneksi.GetConnection().createStatement();
+            ResultSet res = statement.executeQuery("SELECT * FROM pinjaman");
+
+            while (res.next())
+            {
+                tbl.addRow(new Object[]{
+                    res.getString("id_pinjaman"),
+                    res.getString("kode_buku"),
+                    res.getString("tanggal"),
+                    res.getString("nis"),
+                    res.getString("nama"),
+                    res.getString("kelas"),
+                    
+                });
+                table.setModel(tbl);
+            }
+        }catch (SQLException e){
+                    JOptionPane.showMessageDialog(rootPane, "salah"+e.getMessage() );
+     }  
+    }
+    
+    
+    
+    
+    
+    
 }

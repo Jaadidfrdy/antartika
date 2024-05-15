@@ -9,6 +9,8 @@ import javax.swing.JOptionPane;
 import konek.koneksi;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
+import java.text.SimpleDateFormat;
+import static project.pinjaman.cn;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -30,9 +32,9 @@ public class DataBuku extends javax.swing.JFrame {
         txtcari.setBorder(null);
         datatable();
         cmbkategori.setBackground(new Color(0,0,0,0));
-        
+        setExtendedState(DataBuku.MAXIMIZED_BOTH);
     }
-public static Connection cn;
+    public static Connection cn;
     public static ResultSet rs;
     public static Statement st;
     private void datatable() {
@@ -109,8 +111,8 @@ private void cari() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
-        txtpengarang = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        txtpengarang = new javax.swing.JTextField();
         txtpenerbit = new javax.swing.JTextField();
         txtkodebuku = new javax.swing.JTextField();
         txttahun = new javax.swing.JTextField();
@@ -128,11 +130,11 @@ private void cari() {
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -156,12 +158,13 @@ private void cari() {
         });
         jScrollPane1.setViewportView(table);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 320, 1140, 720));
-        getContentPane().add(txtpengarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(1590, 610, 210, 30));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, 1070, 680));
 
         jLabel2.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Kode Buku");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1450, 530, -1, 30));
+        getContentPane().add(txtpengarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(1590, 610, 210, 30));
         getContentPane().add(txtpenerbit, new org.netbeans.lib.awtextra.AbsoluteConstraints(1590, 650, 210, 30));
         getContentPane().add(txtkodebuku, new org.netbeans.lib.awtextra.AbsoluteConstraints(1590, 530, 210, 30));
 
@@ -182,28 +185,34 @@ private void cari() {
         getContentPane().add(txtjudulbuku, new org.netbeans.lib.awtextra.AbsoluteConstraints(1590, 570, 210, 30));
 
         jLabel3.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Kategori");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1450, 730, -1, 30));
 
         jLabel4.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Penerbit");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1450, 650, -1, 30));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1450, 650, 80, 30));
 
         jLabel5.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Jumlah");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1450, 770, 70, 30));
 
         jLabel6.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Tahun Terbit");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1450, 690, -1, 30));
 
         jLabel7.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Judul Buku");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1450, 570, -1, 30));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1450, 570, 110, 30));
 
         jLabel8.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Pengarang");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(1450, 610, -1, 30));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(1450, 610, 100, 30));
 
         txtcari.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -222,7 +231,7 @@ private void cari() {
                 jLabel16MouseClicked(evt);
             }
         });
-        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(1730, 300, -1, -1));
+        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(1930, 310, -1, -1));
 
         jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnbuku-.png"))); // NOI18N
         jLabel17.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -230,7 +239,7 @@ private void cari() {
                 jLabel17MouseClicked(evt);
             }
         });
-        getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(1770, 300, -1, -1));
+        getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(1600, 1030, -1, -1));
 
         jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnbukuedt.png"))); // NOI18N
         jLabel18.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -238,23 +247,45 @@ private void cari() {
                 jLabel18MouseClicked(evt);
             }
         });
-        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(1810, 300, -1, -1));
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 290, -1, -1));
-
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Vector (19).png"))); // NOI18N
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, -1, -1));
+        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(1800, 1020, -1, -1));
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnpinjaman.png"))); // NOI18N
+        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel11MouseClicked(evt);
+            }
+        });
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, -1, -1));
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnusername.png"))); // NOI18N
         getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, -1, -1));
 
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnabsensi.png"))); // NOI18N
+        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel13MouseClicked(evt);
+            }
+        });
         getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, -1, -1));
 
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Data buku.png"))); // NOI18N
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1800, 1070));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btndatabuku.png"))); // NOI18N
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, -1, -1));
+
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnbuku+.png"))); // NOI18N
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel9MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(1680, 1020, -1, -1));
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/databuku.png"))); // NOI18N
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 1080));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -291,7 +322,7 @@ private void cari() {
     }//GEN-LAST:event_txtcariActionPerformed
 
     private void jLabel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MouseClicked
-       String kodebuku = txtkodebuku.getText();
+        String kodebuku = txtkodebuku.getText();
         String judulbuku = txtjudulbuku.getText();
         String pengarang = txtpengarang.getText();
         String penerbit = txtpenerbit.getText();
@@ -385,6 +416,57 @@ private void cari() {
         }
         datatable();  // TODO add your handling code here:
     }//GEN-LAST:event_jLabel17MouseClicked
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+new DataBuku().show();
+                dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
+new pinjaman().show();
+                dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel11MouseClicked
+
+    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
+     // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel13MouseClicked
+
+    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
+
+        String kodebuku = txtkodebuku.getText();
+        String judulbuku = txtjudulbuku.getText();
+        String pengarang = txtpengarang.getText();
+        String penerbit = txtpenerbit.getText();
+        String tahunterbit = txttahun.getText();
+        String kategori = txtkategori.getText();
+        String jumlah = txtjumlah.getText();
+        
+
+        try {
+            // Connect
+            String sql = "INSERT INTO `data_buku`(kode_buku,judul_buku, pengarang, penerbit, tahun_terbit, kategori, jumlah) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            cn = koneksi.GetConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+
+            // Set paramater
+            pst.setString(1, kodebuku);
+            pst.setString(2, judulbuku);
+            pst.setString(3, pengarang);
+            pst.setString(4, penerbit);
+            pst.setString(5, tahunterbit);
+            pst.setString(6, kategori);
+            pst.setString(7, jumlah);
+
+            // Execute
+            pst.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Data tersimpan");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Gagal menyimpan data: " + e.getMessage());
+        }
+        // Update table
+        datatable();        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel9MouseClicked
 
     /**
      * @param args the command line arguments
